@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <title>Dotty Caleidoscope</title>
+    <script src="p5.min.js"></script>
+    <script src="caleidoscope.js" type="module"></script>
+    <style>
+      div#control div{ margin-bottom: 10px; }
+    </style>
+  </head>
+  <body style="background: black; color: white">
+    <div id="control" style="position: absolute; left: 900px; width: 200px">
+      <div>
+      <input type="range" id="noOfDots" min="10" max="40" value="20" /><br />
+      <label for="noOfDots">size in dots</label>
+      </div>
+      <div>
+      <input type="range" id="noOfColours" min="2" max="32" value="10"/><br />
+      <label for="noOfColours">number of colours</label>
+      </div>
+      <div>
+      <input type="button" id="redraw" value="Redraw">
+      </div>
+      <div>
+      <input type="button" id="newColours" value="New colours">
+      </div>
+    </div>
+    <main> </main>
+  </body>
+</html>
