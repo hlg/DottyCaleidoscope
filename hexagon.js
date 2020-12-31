@@ -17,9 +17,8 @@ class Hexagon {
         return this.b*(2*this.s-2) + this.a*2;
     }
     draw(palette){
-        translate(this.a*(2*this.s-1), this.a+this.b*(this.s-1)); // hexagon center
-        for(var y = -(this.s-1); y<=0; y++){
-            for(var x = y; x<=0; x+=2){
+        for(var y = 0; y<= this.s-1; y++){
+            for(var x=y; x>=0; x-=2){
                 var RGB = palette.random();
                 var R = RGB[0]; var G = RGB[1]; var B = RGB[2];
                 for(var n=0; n<6; n++){
@@ -33,8 +32,20 @@ class Hexagon {
                 }
             }
         }
-        if(debug) fill(255,0,0);
-        if(debug) ellipse(0,0,5,5);
+        if(debug) this.drawCenterMark();
+    }
+
+    drawCenterMark() {
+        fill(255, 0, 0);
+        ellipse(0, 0, 5, 5);
+    }
+
+    centerY() {
+        return this.a + this.b * (this.s - 1);
+    }
+
+    centerX() {
+        return this.a * (2 * this.s - 1);
     }
 }
 

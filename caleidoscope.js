@@ -38,6 +38,7 @@ function redrawWithNewColours(){
 window.draw = function() {
   background(0);
   push();
+  translate(hexagon.centerX(), hexagon.centerY());
   hexagon.draw(palette);
   pop();
   translate(900,200); // palette position
