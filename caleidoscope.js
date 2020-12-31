@@ -12,9 +12,9 @@ var expert = true;
 
 function initSize(){
   diameter = 400.0/s;
-  distance = diameter/10;
-  radius = diameter/2;
-  a = radius + distance/2;
+  distance = diameter/10.0;
+  radius = diameter/2.0;
+  a = radius + distance/2.0;
   b =  a * Math.sqrt(3); // 2*a * Math.cos(Math.toRadians(30))
 }
 
@@ -30,6 +30,7 @@ window.setup = function() {
   select('#newColours').mousePressed(redrawWithNewColours);
   noLoop();
   strokeWeight(2);
+  noStroke();
   redraw(); 
 }
 
