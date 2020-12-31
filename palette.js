@@ -16,8 +16,13 @@ class Palette {
     return Math.floor(Math.random() * n);
   }
   random(){
-    return this.colours[this.randInt(this.colours.length)];
+    return this.colours[this.randomIndex()];
   }
+
+  randomIndex() {
+    return this.randInt(this.colours.length);
+  }
+
   draw(){
     this.colours.forEach( (rgb, i) => {
       if(i==this.activeColour) stroke(255);

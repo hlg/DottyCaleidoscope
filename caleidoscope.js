@@ -9,10 +9,11 @@ var hexagon = new Hexagon();
 window.setup = function() {
   hexagon.initSize(20);
   palette.initColours(10);
+  hexagon.randomDots(palette); // TODO move to hexagon.initSize
   createCanvas(hexagon.width() + 300, hexagon.height());
-  select('#noOfDots').changed(changeSize);
-  select('#noOfColours').changed(changeColour);
-  select('#redraw').mousePressed(redraw);
+  select('#noOfDots').changed(changeHexagonSize);
+  select('#noOfColours').changed(changePaletteSize);
+  select('#redraw').mousePressed(redrawWithNewDots);
   select('#newColours').mousePressed(redrawWithNewColours);
   strokeWeight(2);
   noStroke();
@@ -20,18 +21,26 @@ window.setup = function() {
   redraw();
 }
 
-function changeSize(){
+function changeHexagonSize(){
   hexagon.initSize(select('#noOfDots').value());
+  hexagon.randomDots(palette); // TODO move to hexagon.initSize
   redraw();
 }
 
-function changeColour(){
-  palette.initColours(select('#noOfColours').value()); 
+function changePaletteSize(){
+  // TODO keep as much of palette as possible when changing size
+  palette.initColours(select('#noOfColours').value());
+  hexagon.randomDots(palette);
   redraw();
 }
 
 function redrawWithNewColours(){
-  palette.initColours(); 
+  palette.initColours();
+  redraw();
+}
+
+function redrawWithNewDots(){
+  hexagon.randomDots(palette);
   redraw();
 }
 
