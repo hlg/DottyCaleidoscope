@@ -29,6 +29,7 @@ window.setup = function() {
   select('#redraw').mousePressed(redraw);
   select('#newColours').mousePressed(redrawWithNewColours);
   noLoop();
+  strokeWeight(2);
   redraw(); 
 }
 
@@ -73,9 +74,26 @@ window.draw = function() {
   pop();
   translate(900,200);
   palette.colours.forEach( (rgb, i) => {
+    if(i==0) stroke(255);
     fill(rgb[0],rgb[1],rgb[2]);
-    rect(i%10*20,Math.floor(i/10)*20,19,19);
+    rect(i%10*25,Math.floor(i/10)*25,20,20);
+    if(i==0) noStroke();
   });
+  translate(0,Math.ceil(palette.colours.length/10)*25 + 20);
+  var activeColour = 0;
+  for(var rgb=0; rgb<3; rgb++){
+    var colourClone = [...palette.colours[activeColour]];
+    var bandValue = colourClone[rgb];
+    for(var c=0; c<256; c++){
+      colourClone[rgb]=c;
+      stroke(...colourClone);
+      line(c,0,c,20);
+    }
+    stroke(255);
+    line(bandValue,0,bandValue,20);
+    translate(0,30);
+  }
+  noStroke();
 }
 
 
