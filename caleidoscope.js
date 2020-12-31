@@ -54,7 +54,7 @@ window.draw = function() {
   background(0);
   push();
   // TODO move to to Hexagon class
-  translate(a*(2*s-1), a+b*(s-1));
+  translate(a*(2*s-1), a+b*(s-1)); // hexagon center
   for(var y = -(s-1); y<=0; y++){ 
     for(var x = y; x<=0; x+=2){ 
       var RGB = palette.random();
@@ -73,29 +73,12 @@ window.draw = function() {
   if(debug) fill(255,0,0);
   if(debug) ellipse(0,0,5,5);
   pop();
-  translate(900,200);
-  palette.colours.forEach( (rgb, i) => {
-    if(i==0) stroke(255);
-    fill(rgb[0],rgb[1],rgb[2]);
-    rect(i%10*25,Math.floor(i/10)*25,20,20);
-    if(i==0) noStroke();
-  });
-  translate(0,Math.ceil(palette.colours.length/10)*25 + 20);
-  var activeColour = 0;
-  for(var rgb=0; rgb<3; rgb++){
-    var colourClone = [...palette.colours[activeColour]];
-    var bandValue = colourClone[rgb];
-    for(var c=0; c<256; c++){
-      colourClone[rgb]=c;
-      stroke(...colourClone);
-      line(c,0,c,20);
-    }
-    stroke(255);
-    line(bandValue,0,bandValue,20);
-    translate(0,30);
-  }
-  noStroke();
+  translate(900,200); // palette position
+  palette.draw();
 }
 
+window.mouseClicked = function(){
+  if(mouseX >= 900 && mouseY >= 200) palette.mouseClicked(mouseX-900, mouseY-200);
+}
 
 
