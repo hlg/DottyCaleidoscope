@@ -22,15 +22,16 @@ window.setup = function() {
 }
 
 function changeHexagonSize(){
+  // TODO keep as much of hexagon as possible when changing size
   hexagon.initSize(select('#noOfDots').value());
-  hexagon.randomDots(palette); // TODO move to hexagon.initSize
+  hexagon.randomDots(palette);
   redraw();
 }
 
 function changePaletteSize(){
   // TODO keep as much of palette as possible when changing size
   palette.initColours(select('#noOfColours').value());
-  hexagon.randomDots(palette);
+  hexagon.randomDots(palette); // TODO extra function or flag that keeps those indizes which are still valid
   redraw();
 }
 
@@ -56,6 +57,7 @@ window.draw = function() {
 
 window.mouseClicked = function(){
   if(mouseX >= 900 && mouseY >= 200) palette.mouseClicked(mouseX-900, mouseY-200);
+  hexagon.mouseClicked(mouseX-hexagon.centerX(), hexagon.centerY()-mouseY, palette);
 }
 
 
