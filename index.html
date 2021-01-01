@@ -4,11 +4,16 @@
     <script src="p5.min.js"></script>
     <script src="caleidoscope.js" type="module"></script>
     <style>
-      div#control div{ margin-bottom: 10px; }
+      div#sidepanel div div{ margin-bottom: 10px; }
+      div#doc div label {
+        display: inline-block;
+        width: 180px;
+      }
     </style>
   </head>
   <body style="background: black; color: white">
-    <div id="control" style="position: absolute; left: 900px; width: 200px">
+    <div id="sidepanel" style="position:absolute; height:750px; left: 900px; width: 500px">
+    <div id="control">
       <div>
       <input type="range" id="noOfDots" min="10" max="40" value="20" /><br />
       <label for="noOfDots">size in dots</label>
@@ -17,12 +22,23 @@
       <input type="range" id="noOfColours" min="2" max="32" value="10"/><br />
       <label for="noOfColours">number of colours</label>
       </div>
+      <div> <input type="button" id="redraw" value="New dots"> </div>
+      <div> <input type="button" id="newColours" value="New colours"> </div>
+    </div>
+    <div id="doc" style="position: absolute; bottom: 0px">
       <div>
-      <input type="button" id="redraw" value="New dots">
+        <label for="saveJson">Save design (JSON)</label>
+        <input type="button" id="saveJson" value="Save">
       </div>
       <div>
-      <input type="button" id="newColours" value="New colours">
+        <label for="loadJson">Load design (JSON)</label>
+        <input type="file" id="loadJson"><br />
       </div>
+      <div>
+        <label for="savePng">Save image (PNG)</label>
+        <input type="button" id="savePng" value="Save">
+      </div>
+    </div>
     </div>
     <main> </main>
   </body>
