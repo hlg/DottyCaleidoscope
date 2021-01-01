@@ -67,12 +67,12 @@ function loadJson(event){
       select('#noOfColours').value(json.colours.length);
       redraw();
   };
-  // reader.onerror
+  // TODO reader.onerror
   reader.readAsText(event.target.files[0]);
 }
 
 function savePng(){
-
+  get(0,0,hexagon.width(),hexagon.height()).save('design','png');
 }
 
 window.draw = function() {
