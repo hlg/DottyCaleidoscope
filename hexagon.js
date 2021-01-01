@@ -27,21 +27,13 @@ class Hexagon {
         var x = 0; var y = 0;
         this.dots.forEach( ci => {
             this.drawDot(palette.colours[ci], x, y);
-            if (x >= 2) {
-                x -= 2;
+            if (x <= y-2) {
+                x += 2;
             } else {
                 y++;
-                x = y;
+                x = y%2;
             }
         });
-        /*
-        for(var y = 0; y<= this.s-1; y++){
-            for(var x=y; x>=0; x-=2){
-                var RGB = palette.random();
-                this.drawDot(RGB, x, y);
-            }
-        }
-         */
         if(debug) this.drawCenterMark();
     }
 
@@ -77,7 +69,7 @@ class Hexagon {
         if(yi>=0 && yi<this.s){
             var xi = Math.floor((x+this.a*((yi+1)%2))/(2*this.a));
             if(xi>=0 && xi<=Math.floor(yi/2)){
-                var ci = yi===0 ? 0 : (Math.ceil((yi/2+1)*yi)/2 + Math.ceil((yi+1)/2)-xi-1);
+                var ci = yi===0 ? 0 : (Math.ceil((yi/2+1)*yi)/2 + xi);
                 this.dots[ci] = palette.activeColour;
                 redraw();
             }
