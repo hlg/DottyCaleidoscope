@@ -19,7 +19,7 @@ class Hexagon {
     }
     randomDots(palette){
         this.dots = []
-        for(var i=0; i<Math.ceil((this.s/2+1)*this.s)/2; i++){
+        for(var i=0; i<Math.ceil((this.s/2+1)*this.s)/2; i++){ // equivalent: i < (s%2 ? (s+1)**2 : s*(s+2))/4
             this.dots[i] = palette.randomIndex();
         }
     }
@@ -65,9 +65,9 @@ class Hexagon {
         return this.a * (2 * this.s - 1);
     }
     mouseClicked(x,y,palette){
-        var yi = Math.floor((y+this.b/2)/this.b);
+        var yi = Math.floor(y/this.b+0.5);
         if(yi>=0 && yi<this.s){
-            var xi = Math.floor((x+this.a*((yi+1)%2))/(2*this.a));
+            var xi = Math.floor((x/this.a+((yi+1)%2))/2);
             if(xi>=0 && xi<=Math.floor(yi/2)){
                 var ci = yi===0 ? 0 : (Math.ceil((yi/2+1)*yi)/2 + xi);
                 this.dots[ci] = palette.activeColour;
