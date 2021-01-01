@@ -72,6 +72,17 @@ class Hexagon {
     centerX() {
         return this.a * (2 * this.s - 1);
     }
+    mouseClicked(x,y,palette){
+        var yi = Math.floor((y+this.b/2)/this.b);
+        if(yi>=0 && yi<this.s){
+            var xi = Math.floor((x+this.a*((yi+1)%2))/(2*this.a));
+            if(xi>=0 && xi<=Math.floor(yi/2)){
+                var ci = yi===0 ? 0 : (Math.ceil((yi/2+1)*yi)/2 + Math.ceil((yi+1)/2)-xi-1);
+                this.dots[ci] = palette.activeColour;
+                redraw();
+            }
+        }
+    }
 }
 
 export { Hexagon }
