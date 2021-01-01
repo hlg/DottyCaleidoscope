@@ -13,8 +13,11 @@ window.setup = function() {
   createCanvas(hexagon.width() + 300, hexagon.height());
   select('#noOfDots').changed(changeHexagonSize);
   select('#noOfColours').changed(changePaletteSize);
-  select('#redraw').mousePressed(redrawWithNewDots);
-  select('#newColours').mousePressed(redrawWithNewColours);
+  select('#redraw').mouseClicked(redrawWithNewDots);
+  select('#newColours').mouseClicked(redrawWithNewColours);
+  select('#saveJson').mouseClicked(saveJson);
+  select('#loadJson').changed(loadJson);
+  select('#savePng').mouseClicked(savePng);
   strokeWeight(2);
   noStroke();
   noLoop();
@@ -43,6 +46,33 @@ function redrawWithNewColours(){
 function redrawWithNewDots(){
   hexagon.randomDots(palette);
   redraw();
+}
+
+function saveJson(){
+  var json = {};
+  json.colours = palette.colours;
+  json.dots = hexagon.dots;
+  json.dotSize = hexagon.s;
+  saveJSON(json, "design.json");
+}
+
+function loadJson(event){
+  var reader = new FileReader();
+  reader.onload = function (ev){
+      var json = JSON.parse(ev.target.result);
+      hexagon.initSize(json.dotSize);
+      palette.colours = json.colours;
+      hexagon.dots = json.dots;
+      select('#noOfDots').value(json.dotSize);
+      select('#noOfColours').value(json.colours.length);
+      redraw();
+  };
+  // reader.onerror
+  reader.readAsText(event.target.files[0]);
+}
+
+function savePng(){
+
 }
 
 window.draw = function() {
