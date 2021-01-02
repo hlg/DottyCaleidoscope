@@ -67,15 +67,10 @@ class Hexagon {
 
     drawHexagon(palette){
         strokeWeight(0.4);
-        this.iterateDots( this.drawDotFunction(palette));
-        if(debug) this.drawCenterMark();
-    }
-
-    drawDotFunction(palette){
-        // TODO I think hexagon should know its palette. Then this curry can be removed.
-        return function (x,y,ci, di){
+        this.iterateDots( function (x, y, ci, di) {
             this.drawDot.bind(this)(palette.colours[ci], x, y);
-        }
+        });
+        if(debug) this.drawCenterMark();
     }
 
     drawDot(RGB, x, y) {
