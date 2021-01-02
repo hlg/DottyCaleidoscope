@@ -20,6 +20,7 @@ window.setup = function() {
   select('#loadJson').changed(loadJson);
   select('#savePng').mouseClicked(savePng);
   select('#loadTemplate').changed(loadTemplate);
+  select('#showTemplate').changed(redraw);
   strokeWeight(2);
   noStroke();
   noLoop();
@@ -84,6 +85,10 @@ function loadTemplate(event){
       var x=0; var y=0;
       palette.colours=[];
       var hx=hexagon.centerX(); var hy = hexagon.centerY();
+      var noCols = select('#noOfColours').value();
+      var cRes =2**(9-Math.floor(Math.log(noCols+1)/Math.log(2.5)));
+      // cRes will be 256/128/64/32, max palette size 8/64/512/4096, much smaller on average
+      // TODO: warn and don't show full palette when too large
       for(var d=0; d<hexagon.dots.length; d++){
         var region = templateImg.get(hexagon.a*(x-1)+hx, hexagon.b*(y-0.5)+hy, hexagon.a*2, hexagon.b);
         region.loadPixels();
@@ -93,7 +98,6 @@ function loadTemplate(event){
           gSum += region.pixels[i+1];
           bSum += region.pixels[i+2];
         }
-        var cRes = 32;  // 256/8;
         rSum = Math.floor(rSum*4/region.pixels.length / cRes + 0.5)*cRes;
         bSum = Math.floor(bSum*4/region.pixels.length / cRes + 0.5)*cRes;
         gSum = Math.floor(gSum*4/region.pixels.length / cRes + 0.5)*cRes;
@@ -112,6 +116,10 @@ function loadTemplate(event){
           x = y%2;
         }
       }
+      select('#noOfColours').value(palette.colours.length);
+      var showTemplate = select("#showTemplate");
+      showTemplate.elt.disabled = false;
+      showTemplate.elt.checked = true;
       redraw();
     });
   }
@@ -124,7 +132,7 @@ function savePng(){
 
 window.draw = function() {
   background(0);
-  if(templateImg) image(templateImg,0,0); //, hexagon.width(), hexagon.width()/templateImg.width*templateImg.height);
+  if(select("#showTemplate").elt.checked && templateImg) image(templateImg,0,0); //, hexagon.width(), hexagon.width()/templateImg.width*templateImg.height);
   push();
   translate(hexagon.centerX(), hexagon.centerY());
   hexagon.draw(palette);

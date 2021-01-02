@@ -32,6 +32,7 @@ class Palette {
     });
     translate(0, this.rgbOffset());
     for(var rgb=0; rgb<3; rgb++){
+      // Could also use CSS gradients instead of the following.
       var colourClone = [...this.colours[this.activeColour]];
       var bandValue = colourClone[rgb];
       for(var c=0; c<256; c++){
