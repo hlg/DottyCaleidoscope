@@ -24,6 +24,7 @@ class Hexagon {
         }
     }
     draw(palette){
+        strokeWeight(0.4);
         var x = 0; var y = 0;
         this.dots.forEach( ci => {
             this.drawDot(palette.colours[ci], x, y);
@@ -43,6 +44,7 @@ class Hexagon {
         var B = RGB[2];
         for (var n = 0; n < 6; n++) {
             for (var m = 0; m < 2; m++) {
+                if (RGB[0] + RGB[1] + RGB[2] < 32) stroke(255); else noStroke();
                 if (debug) stroke(255 * m);
                 scale(-1, 1);
                 fill(R, G, B);
