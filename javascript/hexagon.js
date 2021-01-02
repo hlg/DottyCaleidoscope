@@ -23,6 +23,43 @@ class Hexagon {
             this.dots[i] = palette.randomIndex();
         }
     }
+
+    dotsFromImage(templateImg, palette){
+        palette.colours=[];
+        var hx=this.centerX(); var hy = this.centerY();
+        var noCols = select('#noOfColours').value();
+        var cRes =2**(9-Math.floor(Math.log(noCols+1)/Math.log(2.5)));
+        // cRes will be 256/128/64/32, max palette size 8/64/512/4096, much smaller on average
+        // TODO: warn and don't show full palette when too large
+        var x=0; var y=0;
+        this.dots.forEach((ci,d) => {
+            var region = templateImg.get(this.a*(x-1)+hx, this.b*(y-0.5)+hy, this.a*2, this.b);
+            region.loadPixels();
+            var average = [0,0,0];
+            for(var rgb = 0; rgb<3; rgb++){
+                for(var i=0; i<region.pixels.length; i+=4){
+                    average[rgb] += region.pixels[i+rgb];
+                }
+                average[rgb] = Math.floor(average[rgb]*4/region.pixels.length / cRes + 0.5)*cRes;
+            }
+            let existingColour = palette.colours.findIndex(function (col){
+                return col.every(function(c,i){return c===average[i]});
+            });
+            if(existingColour===-1){
+                palette.colours.push(average);
+                existingColour = palette.colours.length-1;
+            }
+            this.dots[d] = existingColour;
+            if(x <= y-2){
+                x += 2;
+            } else {
+                y++;
+                x = y%2;
+            }
+        });
+
+    }
+
     draw(palette){
         strokeWeight(0.4);
         var x = 0; var y = 0;
