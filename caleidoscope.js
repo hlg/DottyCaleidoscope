@@ -11,7 +11,7 @@ window.setup = function() {
   hexagon.initSize(20);
   palette.initColours(10);
   hexagon.randomDots(palette);
-  createCanvas(hexagon.width() + 300, hexagon.height());
+  createCanvas(1200, 800);
   select('#noOfDots').changed(changeHexagonSize);
   select('#noOfColours').changed(changePaletteSize);
   select('#redraw').mouseClicked(redrawWithNewDots);
