@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
   <head>
     <title>Dotty Caleidoscope</title>
     <script src="p5.min.js"></script>
@@ -9,42 +9,51 @@
         display: inline-block;
         width: 180px;
       }
+      div#doc div {
+        white-space: nowrap;
+      }
+      div#control input[type='button'] {
+        width: 160px;
+      }
+      div#control input[type='range'] {
+        width: 256px;
+      }
     </style>
   </head>
-  <body style="background: black; color: white">
-    <div id="sidepanel" style="position:absolute; height:750px; left: 900px; width: 500px">
+  <body style="background: black; color: white; margin:10px; position:absolute;">
+    <div id="sidepanel" style="position:absolute; height:750px; left: 900px; min-width:500px; overflow-x:visible">
     <div id="control">
       <div>
       <input type="range" id="noOfDots" min="10" max="40" value="20" autocomplete="off" /><br />
-      <label for="noOfDots">size in dots</label>
+      <label for="noOfDots">Size in dots</label>
       </div>
       <div style="margin-bottom: 20px">
       <input type="range" id="noOfColours" min="2" max="50" value="10" autocomplete="off"/><br />
-      <label for="noOfColours">number of colours</label>
+      <label for="noOfColours">Number of colours</label>
       </div>
-      <div> <input type="button" id="redraw" value="New dots"> </div>
-      <div> <input type="button" id="newColours" value="New colours"> </div>
+      <div> <input type="button" id="redraw" value="Random dots"> </div>
+      <div> <input type="button" id="newColours" value="Random colours"> </div>
     </div>
-    <div id="doc" style="position: absolute; bottom: 0px">
+    <div id="doc" style="position: absolute; bottom: 0">
       <div>
-        <label for="saveJson">Save design (JSON)</label>
-        <input type="button" id="saveJson" value="Save">
+        <label for="loadTemplate">Load draft image</label>
+        <input type="file" id="loadTemplate" autocomplete="off">
+      </div>
+      <div>
+        <label for="showTemplate">Show draft image</label>
+        <input type="checkbox" id="showTemplate" disabled autocomplete="off">
       </div>
       <div>
         <label for="loadJson">Load design (JSON)</label>
         <input type="file" id="loadJson" autocomplete="off">
       </div>
       <div>
-        <label for="savePng">Save image (PNG)</label>
+        <label for="saveJson">Save design (JSON)</label>
+        <input type="button" id="saveJson" value="Save">
+      </div>
+      <div>
+        <label for="savePng">Save canvas (PNG)</label>
         <input type="button" id="savePng" value="Save">
-      </div>
-      <div>
-        <label for="loadTemplate">Load template (PNG)</label>
-        <input type="file" id="loadTemplate" autocomplete="off">
-      </div>
-      <div>
-        <label for="showTemplate">Show template</label>
-        <input type="checkbox" id="showTemplate" disabled autocomplete="off">
       </div>
     </div>
     </div>

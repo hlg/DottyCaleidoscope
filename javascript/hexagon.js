@@ -12,10 +12,10 @@ class Hexagon {
         // this.randomDots();
     }
     width(){
-        return this.a*2*(2*this.s-1) + this.diameter;
+        return 2* this.a * (2 * this.s - 1);
     }
     height(){
-        return this.b*(2*this.s-1) + this.diameter;
+        return 2*(this.b*(this.s-1) + this.a);
     }
     randomDots(palette){
         this.dots = []
