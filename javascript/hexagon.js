@@ -9,6 +9,7 @@ class Hexagon {
         this.radius = this.diameter/2.0;
         this.a = this.radius + this.distance/2.0;
         this.b =  this.a * Math.sqrt(3); // 2*a * Math.cos(Math.toRadians(30))
+        resizeCanvas(this.width()+300, this.height(), true);
         // this.randomDots();
     }
     width(){
