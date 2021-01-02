@@ -10,7 +10,7 @@ var templateImg;
 window.setup = function() {
   hexagon.initSize(20);
   palette.initColours(10);
-  hexagon.randomDots(palette); // TODO move to hexagon.initSize
+  hexagon.randomDots(palette);
   createCanvas(hexagon.width() + 300, hexagon.height());
   select('#noOfDots').changed(changeHexagonSize);
   select('#noOfColours').changed(changePaletteSize);
@@ -37,7 +37,7 @@ function changeHexagonSize(){
 function changePaletteSize(){
   // TODO keep as much of palette as possible when changing size
   palette.initColours(select('#noOfColours').value());
-  hexagon.randomDots(palette); // TODO extra function or flag that keeps those indizes which are still valid
+  hexagon.randomDots(palette); // TODO keeps those indizes which are still valid
   redraw();
 }
 
@@ -70,7 +70,7 @@ function loadJson(event){
       select('#noOfColours').value(json.colours.length);
       redraw();
   };
-  // TODO reader.onerror
+  // TODO reader.onerror // and error handling in general
   reader.readAsText(event.target.files[0]);
 }
 
@@ -92,20 +92,18 @@ function loadTemplate(event){
       for(var d=0; d<hexagon.dots.length; d++){
         var region = templateImg.get(hexagon.a*(x-1)+hx, hexagon.b*(y-0.5)+hy, hexagon.a*2, hexagon.b);
         region.loadPixels();
-        var rSum =0, gSum = 0, bSum = 0;
-        for(var i=0; i<region.pixels.length; i+=4){
-          rSum += region.pixels[i];
-          gSum += region.pixels[i+1];
-          bSum += region.pixels[i+2];
+        var average = [0,0,0];
+        for(var rgb = 0; rgb<3; rbg++){
+          for(var i=0; i<region.pixels.length; i+=4){
+            average[rgb] += region.pixels[i+rgb];
+          }
+          average[rgb] = Math.floor(average[rgb]*4/region.pixels.length / cRes + 0.5)*cRes;
         }
-        rSum = Math.floor(rSum*4/region.pixels.length / cRes + 0.5)*cRes;
-        bSum = Math.floor(bSum*4/region.pixels.length / cRes + 0.5)*cRes;
-        gSum = Math.floor(gSum*4/region.pixels.length / cRes + 0.5)*cRes;
         let existingColour = palette.colours.findIndex(function (col){
-          return (col[0]===rSum) && (col[1]===gSum) && (col[2]===bSum)
+          return col.every(function(c,i){return c===average[i]});
         });
         if(existingColour===-1){
-          palette.colours.push([rSum,gSum,bSum]);
+          palette.colours.push(average);
           existingColour = palette.colours.length-1;
         }
         hexagon.dots[d] = existingColour;
