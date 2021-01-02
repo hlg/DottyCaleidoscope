@@ -101,7 +101,7 @@ window.draw = function() {
   if(select("#showTemplate").elt.checked && templateImg) image(templateImg,0,0); //, hexagon.width(), hexagon.width()/templateImg.width*templateImg.height);
   push();
   translate(hexagon.centerX(), hexagon.centerY());
-  hexagon.draw(palette);
+  hexagon.drawHexagon(palette);
   pop();
   translate(900,200); // palette position
   palette.draw();
