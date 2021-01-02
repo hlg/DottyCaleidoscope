@@ -49,10 +49,13 @@ class Palette {
   rgbOffset(){
     return Math.ceil(this.colours.length/10)*25 + 20;
   }
-  mouseClicked(x,y){ // assert x,y >= 0 
-    if(y<=this.rgbOffset()-20 && y%25<=20 && x<=250 && x%25<=20){
-      this.activeColour = Math.floor(y/25)*10 + Math.floor(x/25);
-      redraw();
+  mouseClicked(x,y){ // assert x,y >= 0
+    if(y<this.rgbOffset()-20 && y%25<=20 && x<250 && x%25<=20){
+      var selected = Math.floor(y/25)*10 + Math.floor(x/25);
+      if(selected < this.colours.length) {
+        this.activeColour = selected;
+        redraw(); // for palette highlighting only
+      }
     } else if (y>=this.rgbOffset()) {
       var rgbY = y-this.rgbOffset();
       if(rgbY<=80 && rgbY%30<=20 && x<=255){
